@@ -8,7 +8,8 @@
         'stock',
         'l10n_ar',
         'l10n_ar_stock',
-        # 'l10n_ar_stock_delivery',
+        'l10n_ar_stock_delivery',
+        'delivery',
         ],
     'data':[
        #'reports/remito_preimpreso_report.xml',
@@ -17,5 +18,4 @@
     'auto_install': False,
     'installable' : True,
     'application' : False,
-    'post_init_hook': 'hooks.enable_delivery_methods',
 }
