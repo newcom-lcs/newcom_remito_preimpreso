@@ -1,75 +1,105 @@
+<!-- última modificación funcional 10/10/2024 15:00hs -->
+
 <odoo>
 	<template id="report_remito_preimpreso_document" priority="30" inherit_id="stock.report_deliveryslip">
 		<xpath expr="//t[@t-call='stock.report_delivery_document']" position="replace">
 			<t t-call="web.html_container">
 				<t t-foreach="docs" t-as="o">
-					<div t-attf-class="article o_report_layout_standard" 
-						t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-						<div class="pt-0">
-							<t t-call="web.address_layout"/>
-							<div class="row">
-								<div class="col-8">
-									<p>
-										<span style="position:absolute;top:27mm;left:192mm" t-esc="o.scheduled_date.strftime('%d-%m-%Y')" ></span>
-										<br/>
-										<span style="position:absolute;top:68mm;left:41mm" t-esc="o.partner_id.name" ></span>
-										<br/>
-										<span style="position:absolute;top:75mm;left:41mm" t-esc="o.partner_id.street.replace('\n',' ')" ></span>
-										<br/>
-										<span style="position:absolute;top:83mm;left:41mm" t-esc="o.partner_id.city" ></span>
-										<br/>
-										<span style="position:absolute;top:90mm;left:41mm" t-esc="o.partner_id.l10n_ar_afip_responsibility_type_id.name" ></span>
-										<br/>
-										<span style="position:absolute;top:98mm;left:63mm" t-esc="o.origin" ></span>
-										<br/>
-										<span style="text-align: left;position:absolute;top:68mm;left:188mm" t-esc="o.partner_id.id" ></span>
-										<br/>
-										<span style="text-align: left;position:absolute;top:75mm;left:188mm" t-esc="o.partner_id.phone" ></span>
-										<br/>
-										<span style="text-align: left;position:absolute;top:83mm;left:188mm" t-esc="o.partner_id.mobile" ></span>
-										<br/>
-										<span style="text-align: left;position:absolute;top:90mm;left:188mm" t-esc="o.partner_id.state_id and o.partner_id.vat or ''" ></span>
-										<br/>
-									</p>
-								</div>
-							</div>
-							<br/>
-							<span t-esc="o.carrier_id.name" style="font-size: 10px;text-align: left;position:absolute;top:278mm;left:38mm"></span>
-							<span style="font-size: 10px;text-align: left;position:absolute;top:280mm;left:105mm">Código de seguimiento:</span>
-							<span t-esc="o.carrier_tracking_ref" style="font-size: 10px;text-align: left;position:absolute;top:280mm;left:135mm"></span>
-							
-							<span style="font-size: 10px;text-align: left;position:absolute;top:285mm;left:105mm">Bultos:</span>
-							<span t-esc="o.number_of_packages" style="font-size: 10px;text-align: left;position:absolute;top:285mm;left:115mm"></span>
-							<span style="font-size: 10px;text-align: left;position:absolute;top:290mm;left:105mm">Valor declarado:</span>
-							<span t-esc="o.declared_value" style="font-size: 10px;text-align: left;position:absolute;top:290mm;left:125mm"></span>
+                    <t t-set="move_lines" t-value="o.move_line_ids.filtered(lambda ml: ml.qty_done > 0).sorted(key=lambda ml: ml.product_id.id)"/>
+                    <t t-set="products" t-value="move_lines.mapped('product_id')"/>
+                    <t t-set="max_renglones" t-value="31"/>
+                    <t t-set="idx_producto" t-value="0"/>
+                    <t t-foreach="products" t-as="p">
+                      <t t-if="idx_producto &lt; len(products)">
+    					<div t-attf-class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+    						<div class="pt-0">
+    							<t t-call="web.address_layout"/>
+    							<div class="row">
+    								<div class="col-8">
+    									<p>
+                                            <!-- FECHA -->
+    										<span style="position:absolute;top:32mm;left:206mm" t-esc="o.scheduled_date.strftime('%d')" ></span>
+                                            <span style="position:absolute;top:32mm;left:218mm" t-esc="o.scheduled_date.strftime('%m')" ></span>
+                                            <span style="position:absolute;top:32mm;left:229mm" t-esc="o.scheduled_date.strftime('%y')" ></span>			                                     
+    										<br/>
+    										 <!-- FECHA -->
+                                             <!-- CABECERA -->
+    										<span style="position:absolute;top:70mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.name" ></span>
+    										<br/>
+    										<span style="position:absolute;top:80mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.street" ></span>
+    										<br/>
+     										<span style="position:absolute;top:80mm;left:170mm" t-esc="o.sale_id.partner_invoice_id.city" ></span>
+    										<br/>
+    										<span style="position:absolute;top:89mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.l10n_ar_afip_responsibility_type_id.name" ></span>
+    										<br/>									                         
+    										<span style="text-align: left;position:absolute;top:89mm;left:170mm" t-esc="o.sale_id.partner_invoice_id.state_id and o.sale_id.partner_invoice_id.vat or ''" ></span>
+                                              <!-- CABECERA -->
+    										<br/>
+    									</p>
+    								</div>
+    							</div>
+    							<br/>
+                              
+                                <table class="table table-sm" style="border:0px solid white ;font-size: 13px; position:absolute; top:122mm; left:17mm">
+                                    <tbody style="border:0px solid white">
+                    				  <t t-set="cant_renglones" t-value="0"/>
+                                      <t t-set="total_products" t-value="len(products)"/>
+                                            <t t-set="cant_renglones" t-value="0"/>
+                                            <t t-set="pending_products" t-value="products[idx_producto:]"/>
+                                      
+                                            <t t-foreach="pending_products" t-as="product">
+                                              <t t-set="product_lines" t-value="move_lines.filtered(lambda ml: ml.product_id == product)"/>
+                                              <t t-set="cant_lineas_series" t-value="len(product_lines) // 3"/>
+                                              <t t-if="(cant_renglones + cant_lineas_series) &lt; max_renglones">
+                                                <t t-set="total_qty" t-value="sum(product_lines.mapped('qty_done'))"/>
+                                                <t t-set="serials" t-value="product_lines.mapped('lot_id.name')"/>
+                                                <t t-set="idx_producto" t-value="idx_producto+1"/>
+    
+                                                <tr style="border:none;">
+                                                    <td style="text-align: right;width: 20mm;border:none;padding:1mm;width:50px">
+                                                        <span style="margin-right:20mm" t-esc="total_qty"/>
+                                                    </td>
+                                                    <td style="text-align: left;border:none;padding:1mm;width:150px">
+                                                        <span t-esc="product.name"/>
+                                                    </td>
+                                                    <td style="text-align: left;border:none;padding:1mm">
+                                                        <t t-foreach="serials" t-as="serial">
+                                                            <span t-esc="serial"/>
+                                                            <t t-if="not serial_last and (serial_index + 1) % 3 != 0">, </t>
+                                                            <t t-if="(serial_index + 1) % 3 == 0 and not serial_last">
+                                                                <br/>
+                                                                <t t-set="cant_renglones" t-value="cant_renglones + 1"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <t t-set="cant_renglones" t-value="cant_renglones + 1"/>
+                                              </t>
+                                            </t>
+                                    </tbody>
+                                </table>
+    
+                                
+                                <!-- FOOTER -->
+                                    <!-- SALES ORDER -->
+                                    <span style="position:absolute;top:295mm;left:20mm" t-esc="o.origin" ></span>
+                                    <br/>
+                                    <!-- SALES ORDER -->
+                                    <!-- DIRECCION DE ENVIO -->
+                                    <span style="position:absolute;top:310mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.street" ></span>
+                                    <span style="position:absolute;top:315mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.zip" ></span>
+                                    <span style="position:absolute;top:315mm;left:40mm" t-esc="o.sale_id.partner_shipping_id.city" ></span>
+                                    <span style="position:absolute;top:320mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.state_id.name" ></span>
+                                    <!-- DIRECCION DE ENVIO -->
+                                   
+    						</div>
+    						<t t-out="0"/>		
+    					</div>
+                        
+                      </t>
+                    </t>
 
-							<span t-esc="o.note" style="font-size: 10px;text-align: left;position:absolute;top:305mm;left:15mm"></span>
-							<table class="table table-sm" style="border:0px solid white ;font-size: 10px; position:absolute; top:128mm">
-								<tbody style="border:0px solid white">
-									<t t-set="move_lines" t-value="o.move_line_ids"/>
-									<tr t-foreach="move_lines" t-as="move_line" style="border:none;">
-										<td style="text-align: right;border:none;width: 30mm; padding:1mm">
-											<span  t-field="move_line.product_id.default_code"/>
-										</td>							
-										<td style="text-align: right;width: 15mm;border:none;padding:1mm">
-											<span  t-field="move_line.qty_done"/>
-										</td>
-										<td style="text-align: left;width: 10mm;border:none;padding:1mm">
-											<span  t-field="move_line.product_uom_id.name"/>
-										</td>
-																	<td style="text-align: left;width: 15mm;border:none;padding:1mm">
-											<span  t-field="move_line.lot_id"/>
-										</td>     
-																	<td style="text-align: left;border:none;padding:1mm">
-											<span   t-field="move_line.product_id.name"/>
-										</td>   
-																	
-									</tr>
-								</tbody>
-							</table> 
-						</div>
-						<t t-out="0"/>		
-					</div>
+            
 					<!-- para arreglar problema con adoc -->
 					<div class="row mt-4 mb-4">
 					</div>
