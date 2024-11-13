@@ -1,0 +1,82 @@
+<odoo>
+	<template id="report_remito_preimpreso_document" priority="30" inherit_id="stock.report_deliveryslip">
+		<xpath expr="//t[@t-call='stock.report_delivery_document']" position="replace">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<div t-attf-class="article o_report_layout_standard" 
+						t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+						<div class="pt-0">
+							<t t-call="web.address_layout"/>
+							<div class="row">
+								<div class="col-8">
+									<p>
+										<span style="position:absolute;top:27mm;left:192mm" t-esc="o.scheduled_date.strftime('%d-%m-%Y')" ></span>
+										<br/>
+										<span style="position:absolute;top:68mm;left:41mm" t-esc="o.partner_id.name" ></span>
+										<br/>
+										<span style="position:absolute;top:75mm;left:41mm" t-esc="o.partner_id.street.replace('\n',' ')" ></span>
+										<br/>
+										<span style="position:absolute;top:83mm;left:41mm" t-esc="o.partner_id.city" ></span>
+										<br/>
+										<span style="position:absolute;top:90mm;left:41mm" t-esc="o.partner_id.l10n_ar_afip_responsibility_type_id.name" ></span>
+										<br/>
+										<span style="position:absolute;top:98mm;left:63mm" t-esc="o.origin" ></span>
+										<br/>
+										<span style="text-align: left;position:absolute;top:68mm;left:188mm" t-esc="o.partner_id.id" ></span>
+										<br/>
+										<span style="text-align: left;position:absolute;top:75mm;left:188mm" t-esc="o.partner_id.phone" ></span>
+										<br/>
+										<span style="text-align: left;position:absolute;top:83mm;left:188mm" t-esc="o.partner_id.mobile" ></span>
+										<br/>
+										<span style="text-align: left;position:absolute;top:90mm;left:188mm" t-esc="o.partner_id.state_id and o.partner_id.vat or ''" ></span>
+										<br/>
+									</p>
+								</div>
+							</div>
+							<br/>
+							<span t-esc="o.carrier_id.name" style="font-size: 10px;text-align: left;position:absolute;top:278mm;left:38mm"></span>
+							<span style="font-size: 10px;text-align: left;position:absolute;top:280mm;left:105mm">Código de seguimiento:</span>
+							<span t-esc="o.carrier_tracking_ref" style="font-size: 10px;text-align: left;position:absolute;top:280mm;left:135mm"></span>
+							
+							<span style="font-size: 10px;text-align: left;position:absolute;top:285mm;left:105mm">Bultos:</span>
+							<span t-esc="o.number_of_packages" style="font-size: 10px;text-align: left;position:absolute;top:285mm;left:115mm"></span>
+							<span style="font-size: 10px;text-align: left;position:absolute;top:290mm;left:105mm">Valor declarado:</span>
+							<span t-esc="o.declared_value" style="font-size: 10px;text-align: left;position:absolute;top:290mm;left:125mm"></span>
+
+							<span t-esc="o.note" style="font-size: 10px;text-align: left;position:absolute;top:305mm;left:15mm"></span>
+							<table class="table table-sm" style="border:0px solid white ;font-size: 10px; position:absolute; top:128mm">
+								<tbody style="border:0px solid white">
+									<t t-set="move_lines" t-value="o.move_line_ids"/>
+									<tr t-foreach="move_lines" t-as="move_line" style="border:none;">
+										<td style="text-align: right;border:none;width: 30mm; padding:1mm">
+											<span  t-field="move_line.product_id.default_code"/>
+										</td>							
+										<td style="text-align: right;width: 15mm;border:none;padding:1mm">
+											<span  t-field="move_line.qty_done"/>
+										</td>
+										<td style="text-align: left;width: 10mm;border:none;padding:1mm">
+											<span  t-field="move_line.product_uom_id.name"/>
+										</td>
+																	<td style="text-align: left;width: 15mm;border:none;padding:1mm">
+											<span  t-field="move_line.lot_id"/>
+										</td>     
+																	<td style="text-align: left;border:none;padding:1mm">
+											<span   t-field="move_line.product_id.name"/>
+										</td>   
+																	
+									</tr>
+								</tbody>
+							</table> 
+						</div>
+						<t t-out="0"/>		
+					</div>
+					<!-- para arreglar problema con adoc -->
+					<div class="row mt-4 mb-4">
+					</div>
+				</t>
+			</t>
+		</xpath>
+	</template>    
+
+
+</odoo>
