@@ -17,5 +17,5 @@
     'auto_install': False,
     'installable' : True,
     'application' : False,
-    'post_init_hook': 'enable_delivery_methods',
+    'post_init_hook': 'hooks.enable_delivery_methods',
 }
