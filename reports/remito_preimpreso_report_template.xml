@@ -59,11 +59,14 @@
                                                     <td style="text-align: right;width: 20mm;border:none;padding:1mm;width:50px">
                                                         <span style="margin-right:20mm" t-esc="total_qty"/>
                                                     </td>
-                                                    <td style="text-align: left;border:none;padding:1mm;width:150px">
-                                                        <span t-esc="product.name"/>
-                                                    </td>
                                                     <td style="text-align: left;border:none;padding:1mm">
+                                                        <span t-esc="product.name"/>
+                                                    <!-- </td>
+                                                    <td style="text-align: left;border:none;padding:1mm"> -->
                                                         <t t-foreach="serials" t-as="serial">
+                                                            <t t-if="serial_index  == 0">
+                                                                <br/>
+                                                            </t>
                                                             <span t-esc="serial"/>
                                                             <t t-if="not serial_last and (serial_index + 1) % 3 != 0">, </t>
                                                             <t t-if="(serial_index + 1) % 3 == 0 and not serial_last">
@@ -86,10 +89,13 @@
                                     <br/>
                                     <!-- SALES ORDER -->
                                     <!-- DIRECCION DE ENVIO -->
-                                    <span style="position:absolute;top:310mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.street" ></span>
-                                    <span style="position:absolute;top:315mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.zip" ></span>
-                                    <span style="position:absolute;top:315mm;left:40mm" t-esc="o.sale_id.partner_shipping_id.city" ></span>
-                                    <span style="position:absolute;top:320mm;left:20mm" t-esc="o.sale_id.partner_shipping_id.state_id.name" ></span>
+                                    <span style="position:absolute;top:310mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.street" ></span>
+                                <br/>
+                                    <span style="position:absolute;top:315mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.zip" ></span>
+                                <br/>
+                                    <span style="position:absolute;top:315mm;left:40mm;width:80%" t-esc="o.sale_id.partner_shipping_id.city" ></span>
+                                <br/>
+                                    <span style="position:absolute;top:320mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.state_id.name" ></span>
                                     <!-- DIRECCION DE ENVIO -->
                                    
     						</div>
