@@ -18,19 +18,19 @@
     								<div class="col-8">
     									<p>
                                             <!-- FECHA -->
-    										<span style="position:absolute;top:32mm;left:206mm" t-esc="o.scheduled_date.strftime('%d')" ></span>
-                                            <span style="position:absolute;top:32mm;left:218mm" t-esc="o.scheduled_date.strftime('%m')" ></span>
-                                            <span style="position:absolute;top:32mm;left:229mm" t-esc="o.scheduled_date.strftime('%y')" ></span>			                                     
+    										<span style="position:absolute;top:30mm;left:208mm" t-esc="o.scheduled_date.strftime('%d')" ></span>
+                                            <span style="position:absolute;top:30mm;left:220mm" t-esc="o.scheduled_date.strftime('%m')" ></span>
+                                            <span style="position:absolute;top:30mm;left:231mm" t-esc="o.scheduled_date.strftime('%y')" ></span>			                                     
     										<br/>
     										 <!-- FECHA -->
                                              <!-- CABECERA -->
-    										<span style="position:absolute;top:70mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.name" ></span>
+    										<span style="position:absolute;top:65mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.name" ></span>
     										<br/>
-    										<span style="position:absolute;top:80mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.street" ></span>
+    										<span style="position:absolute;top:75mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.street" ></span>
     										<br/>
-     										<span style="position:absolute;top:80mm;left:170mm" t-esc="o.sale_id.partner_invoice_id.city" ></span>
+     										<span style="position:absolute;top:75mm;left:170mm" t-esc="o.sale_id.partner_invoice_id.city" ></span>
     										<br/>
-    										<span style="position:absolute;top:89mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.l10n_ar_afip_responsibility_type_id.name" ></span>
+    										<span style="position:absolute;top:80mm;left:41mm" t-esc="o.sale_id.partner_invoice_id.l10n_ar_afip_responsibility_type_id.name" ></span>
     										<br/>									                         
     										<span style="text-align: left;position:absolute;top:89mm;left:170mm" t-esc="o.sale_id.partner_invoice_id.state_id and o.sale_id.partner_invoice_id.vat or ''" ></span>
                                               <!-- CABECERA -->
@@ -85,17 +85,17 @@
                                 
                                 <!-- FOOTER -->
                                     <!-- SALES ORDER -->
-                                    <span style="position:absolute;top:295mm;left:20mm" t-esc="o.origin" ></span>
+                                    <span style="position:absolute;top:285mm;left:20mm" t-esc="o.origin" ></span>
                                     <br/>
                                     <!-- SALES ORDER -->
                                     <!-- DIRECCION DE ENVIO -->
-                                    <span style="position:absolute;top:310mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.street" ></span>
+                                    <span style="position:absolute;top:315mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.street" ></span>
                                 <br/>
-                                    <span style="position:absolute;top:315mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.zip" ></span>
+                                    <span style="position:absolute;top:320mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.zip" ></span>
                                 <br/>
-                                    <span style="position:absolute;top:315mm;left:40mm;width:80%" t-esc="o.sale_id.partner_shipping_id.city" ></span>
+                                    <span style="position:absolute;top:325mm;left:40mm;width:80%" t-esc="o.sale_id.partner_shipping_id.city" ></span>
                                 <br/>
-                                    <span style="position:absolute;top:320mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.state_id.name" ></span>
+                                    <span style="position:absolute;top:330mm;left:20mm;width:80%" t-esc="o.sale_id.partner_shipping_id.state_id.name" ></span>
                                     <!-- DIRECCION DE ENVIO -->
                                    
     						</div>
