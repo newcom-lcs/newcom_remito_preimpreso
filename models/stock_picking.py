@@ -18,8 +18,8 @@ class Picking(models.Model):
             :param separate_pickings: Indicates if pickings should be checked independently for lot/serial numbers or not.
         """
 
-        max_prod_con_serie = 15
-        max_prod_sin_serie = 5
+        max_prod_con_serie = 90
+        max_prod_sin_serie = 30
         # Verificar si el picking es de despacho
         if self.picking_type_code == 'outgoing':
             # Contar la cantidad de productos con y sin serie
