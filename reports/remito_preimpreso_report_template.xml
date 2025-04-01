@@ -85,7 +85,7 @@
                                 
                                 <!-- FOOTER -->
                                     <!-- SALES ORDER -->
-                                    <span style="position:absolute;top:285mm;left:20mm" t-esc="o.origin" ></span>
+                                    <span style="position:absolute;top:285mm;left:20mm" t-esc="o.note" ></span>
                                     <br/>
                                     <!-- SALES ORDER -->
                                     <!-- DIRECCION DE ENVIO -->
